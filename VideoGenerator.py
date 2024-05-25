@@ -27,7 +27,7 @@ class VideoGenerator:
 
 
     def check_imagemagick(self):
-        if not shutil.which("magick"):
+        if not shutil.which("magick") and not shutil.which("convert"):
             raise EnvironmentError("ImageMagick is not installed or not found in the system PATH.")
 
     def check_ffmpeg(self):
