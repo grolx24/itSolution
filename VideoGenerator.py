@@ -18,6 +18,9 @@ class VideoGenerator:
         self.text = text  # Текст бегущей строки
         self.pathMoviePy = "C:\\Program Files\\ImageMagick-7.1.1-Q16\\magick.exe"
 
+        if not os.path.exists("./out"):
+            os.makedirs("./out")
+
         # Проверка наличия программ
         self.check_imagemagick()
         self.check_ffmpeg()
@@ -32,7 +35,7 @@ class VideoGenerator:
             raise EnvironmentError("FFmpeg is not installed or not found in the system PATH.")
 
     def generate_with_moviepy(self, output_path="out/moviepy_output.mp4"):
-        change_settings({"IMAGEMAGICK_BINARY": self.pathMoviePy}) #местоположение ImageMagick
+        #change_settings({"IMAGEMAGICK_BINARY": self.pathMoviePy}) #местоположение ImageMagick
 
         self.background_color = (255, 0, 255)  # magenta
         self.text = "Хеллоу мир!" 
@@ -92,7 +95,7 @@ class VideoGenerator:
 
     def generate_with_ffmpeg(self, output_path="out/ffmpeg_output.mp4"):
         cmd = (
-            f'ffmpeg -y -i ./background.mp4 -r {self.fps} \
+            f'ffmpeg -y -i ./data/background.mp4 -r {self.fps} \
             -vf "drawtext=fontfile=\'./data/arial.ttf\':text=\'{self.text}\':\
             fontcolor=white:fontsize={self.text_fontsize}:\
             x=\'w + n/({self.video_duration*self.fps}) * (-w-tw)\':\
