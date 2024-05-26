@@ -38,7 +38,6 @@ class VideoGenerator:
         #change_settings({"IMAGEMAGICK_BINARY": self.pathMoviePy}) #местоположение ImageMagick
 
         self.background_color = (255, 0, 255)  # magenta
-        self.text = "Хеллоу мир!" 
         text_color = 'white'
 
         # Функция для создания фона
