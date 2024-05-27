@@ -104,7 +104,7 @@
             <button class="refresh-button" id="refresh-button"><i class="fas fa-sync-alt"></i></button>
             <ul id="requests-list">
                 {% for request in recent_requests %}
-                    <li>{{ request.text }}</li>
+                    <li><a href="?text={{ request.text }}">{{ request.text }}</a></li>
                 {% endfor %}
             </ul>
         </div>
