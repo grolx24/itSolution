@@ -4,6 +4,7 @@ from VideoGenerator import VideoGenerator
 from .models import RequestLog
 import os
 import zipfile
+from django.http import JsonResponse
 
 def index(request):
     text = request.GET.get('text', '')
@@ -61,3 +62,14 @@ def download_files(request):
             zip_file.write(file_path, os.path.basename(file_path))
 
     return response
+
+def update_recent_requests(request):
+    recent_requests = RequestLog.objects.exclude(text__exact="").order_by('-id')[:5]
+    
+    # recent_requests_html = '<ul>'
+    recent_requests_html = ''
+    for req in recent_requests:
+        recent_requests_html += f'<li>{req.text}</li>'
+    #recent_requests_html += '</ul>'
+    
+    return JsonResponse({'recent_requests_html': recent_requests_html})

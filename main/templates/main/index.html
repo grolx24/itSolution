@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Генератор видео с бегущей строкой</title>
     <style>
         body {
@@ -51,7 +53,20 @@
             text-align: left;
         }
         .recent-requests h2 {
+            display: inline-block;
             margin-bottom: 15px;
+        }
+        .refresh-button {
+            background: none;
+            border: none;
+            color: gray;
+            font-size: 18px;
+            cursor: pointer;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        .refresh-button:hover {
+            color: black;
         }
         .recent-requests ul {
             list-style-type: none;
@@ -64,24 +79,56 @@
             border-radius: 5px;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
         }
+        .loading {
+            display: none;
+            color: #007bff;
+            margin-top: 20px;
+        }
+        .error {
+            display: none;
+            color: red;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>{{ page_title }}</h1>
-        <form method="GET" action="">
+        <form id="text-form" method="GET" action="">
             <input type="text" id="text-input" name="text" placeholder="Введите текст" required>
             <br>
             <button type="submit">Сгенерировать</button>
         </form>
         <div class="recent-requests">
             <h2>Последние запросы</h2>
-            <ul>
+            <button class="refresh-button" id="refresh-button"><i class="fas fa-sync-alt"></i></button>
+            <ul id="requests-list">
                 {% for request in recent_requests %}
                     <li>{{ request.text }}</li>
                 {% endfor %}
             </ul>
         </div>
     </div>
+    <script>
+        $(document).ready(function() {
+            $('#refresh-button').click(function() {
+                sendAjaxRequest();
+            });
+
+            function sendAjaxRequest() {
+                $.ajax({
+                    url: 'update/', 
+                    type: 'GET', 
+                    success: function(data) {
+                        var requestsList = $('#requests-list');
+                        requestsList.html(data['recent_requests_html']);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Произошла ошибка:', status, error);
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
