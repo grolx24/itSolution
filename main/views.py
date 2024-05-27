@@ -66,10 +66,8 @@ def download_files(request):
 def update_recent_requests(request):
     recent_requests = RequestLog.objects.exclude(text__exact="").order_by('-id')[:5]
     
-    # recent_requests_html = '<ul>'
     recent_requests_html = ''
     for req in recent_requests:
-        recent_requests_html += f'<li>{req.text}</li>'
-    #recent_requests_html += '</ul>'
+        recent_requests_html += f'<li><a href=\"?text={req.text}\">{req.text}</a></li>'
     
     return JsonResponse({'recent_requests_html': recent_requests_html})
