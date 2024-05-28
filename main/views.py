@@ -5,6 +5,7 @@ from .models import RequestLog
 import os
 import zipfile
 from django.http import JsonResponse
+from django.conf import settings
 
 def index(request):
     text = request.GET.get('text', '')
@@ -28,12 +29,10 @@ def index(request):
     return render(request, 'main/index.html', context)
 
 def download_file(request):
-    file_path1 = "./out/ffmpeg_output.mp4"
+    file_path1 = str(settings.BASE_DIR) + "/out/ffmpeg_output.mp4"
 
     if not os.path.exists(file_path1):
         return HttpResponse(status=404)
-
-    print("download_file")
 
     with open(file_path1, 'rb') as file:
         response = HttpResponse(file.read(), content_type='application/octet-stream')
@@ -44,8 +43,9 @@ def download_file(request):
 def download_files(request):
 
     # Список файлов для скачивания
-    files_to_download = ["./out/ffmpeg_output.mp4", 
-    "./out/moviepy_output.mp4", "./out/pygame_output.mp4", "./out/opencv_output.mp4"]
+    files_to_download = [str(settings.BASE_DIR) + "/out/ffmpeg_output.mp4", 
+    str(settings.BASE_DIR) + "/out/moviepy_output.mp4", str(settings.BASE_DIR) + "/out/pygame_output.mp4",
+		str(settings.BASE_DIR) + "/out/opencv_output.mp4"]
 
     # Проверяем, что все файлы существуют
     for file_path in files_to_download:
@@ -71,3 +71,6 @@ def update_recent_requests(request):
         recent_requests_html += f'<li><a href=\"?text={req.text}\">{req.text}</a></li>'
     
     return JsonResponse({'recent_requests_html': recent_requests_html})
+
+def resume(request):
+    return render(request, 'main/resume.html')

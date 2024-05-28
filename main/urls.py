@@ -1,9 +1,10 @@
 from django.urls import path
-from .views import download_file, download_files, update_recent_requests, index
-#
+from . import views
+
 urlpatterns = [
-    path('', index, name='index'),
-    path('download/', download_file, name='download_file'),
-    path('downloads/', download_files, name='download_files'),
-    path('update/', update_recent_requests, name='update_recent_requests'),
+    path('', views.index, name='index'),
+    path('download/', views.download_file, name='download_file'),
+    path('downloads/', views.download_files, name='download_files'),
+    path('update/', views.update_recent_requests, name='update_recent_requests'),
+    path('resume/', views.resume, name='resume'),
 ]

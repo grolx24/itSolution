@@ -6,6 +6,7 @@ import cv2
 import pygame
 import sys
 import shutil
+from django.conf import settings
 
 class VideoGenerator:
 
@@ -18,8 +19,8 @@ class VideoGenerator:
         self.text = text  # Текст бегущей строки
         self.pathMoviePy = "C:\\Program Files\\ImageMagick-7.1.1-Q16\\magick.exe"
 
-        if not os.path.exists("./out"):
-            os.makedirs("./out")
+        if not os.path.exists(str(settings.BASE_DIR) + "/out"):
+            os.makedirs(str(settings.BASE_DIR) + "/out")
 
         # Проверка наличия программ
         self.check_imagemagick()
@@ -34,7 +35,7 @@ class VideoGenerator:
         if not shutil.which("ffmpeg"):
             raise EnvironmentError("FFmpeg is not installed or not found in the system PATH.")
 
-    def generate_with_moviepy(self, output_path="out/moviepy_output.mp4"):
+    def generate_with_moviepy(self, output_path=str(settings.BASE_DIR) + "/out/moviepy_output.mp4"):
         #change_settings({"IMAGEMAGICK_BINARY": self.pathMoviePy}) #местоположение ImageMagick
 
         self.background_color = (255, 0, 255)  # magenta
@@ -66,7 +67,7 @@ class VideoGenerator:
         # Сохраняем финальное видео
         final_clip.write_videofile(output_path, fps=25)
 
-    def generate_with_opencv(self, output_path="out/opencv_output.mp4"):
+    def generate_with_opencv(self, output_path=str(settings.BASE_DIR) + "/out/opencv_output.mp4"):
         text_color = (255, 255, 255)  # Цвет текста (BGR)
         text_fontscale = 2  # Размер шрифта текста
         text_thickness = 3  # Толщина текста
@@ -92,17 +93,17 @@ class VideoGenerator:
 
         out.release()
 
-    def generate_with_ffmpeg(self, output_path="out/ffmpeg_output.mp4"):
+    def generate_with_ffmpeg(self, output_path=str(settings.BASE_DIR) + "/out/ffmpeg_output.mp4"):
         cmd = (
-            f'ffmpeg -y -i ./data/background.mp4 -r {self.fps} \
-            -vf "drawtext=fontfile=\'./data/arial.ttf\':text=\'{self.text}\':\
+            f'ffmpeg -y -i { str(settings.BASE_DIR) }/data/background.mp4 -r {self.fps} \
+            -vf "drawtext=fontfile=\'{ str(settings.BASE_DIR) }/data/arial.ttf\':text=\'{self.text}\':\
             fontcolor=white:fontsize={self.text_fontsize}:\
             x=\'w + n/({self.video_duration*self.fps}) * (-w-tw)\':\
-            y=h-line_h" {output_path}'
+            y=-(line_h/2)+h/2" {output_path}'
         )
         os.system(cmd)
 
-    def generate_with_pygame(self, output_path="out/pygame_output.mp4"):
+    def generate_with_pygame(self, output_path=str(settings.BASE_DIR) + "/out/pygame_output.mp4"):
         background_color = (255, 0, 255)  # Цвет фона (RGB) magenta       
         text_color = (255, 255, 255)  # Цвет текста (RGB) white
 
@@ -141,3 +142,4 @@ if __name__ == "__main__":
     VG.generate_with_pygame()
     VG.generate_with_ffmpeg()
     VG.generate_with_opencv()
+    
