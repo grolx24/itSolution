@@ -76,7 +76,10 @@ class VideoGenerator:
         final_clip = CompositeVideoClip([background_clip, text_clip])
 
         # Сохраняем финальное видео
-        final_clip.write_videofile(output_path, fps=25)
+        try:
+            final_clip.write_videofile(output_path, fps=25)
+        except:
+            print(str(e))
 
     def generate_with_opencv(self, output_path = None):
         if output_path is None:
@@ -170,9 +173,11 @@ class VideoGenerator:
         pygame.quit()
 
 if __name__ == "__main__":
-    VG = VideoGenerator()
-    VG.generate_with_moviepy()
-    VG.generate_with_pygame()
-    VG.generate_with_ffmpeg()
-    VG.generate_with_opencv()
-    
+    try:
+        VG = VideoGenerator()
+        VG.generate_with_moviepy()
+        VG.generate_with_pygame()
+        VG.generate_with_ffmpeg()
+        VG.generate_with_opencv()
+    except Exception as e:
+        print(str(e))
