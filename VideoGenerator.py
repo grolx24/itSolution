@@ -31,8 +31,7 @@ class VideoGenerator:
         try:
             return str(settings.BASE_DIR) + "/out"
 
-        except (ImportError, AttributeError, django.core.exceptions.ImproperlyConfigured):
-            # Обработка случаев, когда настройки Django не доступны
+        except:
             return os.path.join(os.getcwd(), "/out")
 
 
