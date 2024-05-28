@@ -110,32 +110,32 @@ class VideoGenerator:
         out.release()
 
     def generate_with_ffmpeg(self, output_path=None):
-            if output_path is None:
-                output_path = os.path.join(self.output_path, "out", "ffmpeg_output.mp4")
-            
-            cmd = [
-                'ffmpeg',
-                '-y',
-                '-i', os.path.join(self.output_path, 'data', 'background.mp4'),
-                '-r', str(self.fps),
-                '-vf', (
-                    f"drawtext=fontfile='{os.path.join(self.output_path, 'data', 'arial.ttf')}':"
-                    f"text='{self.text}':"
-                    f"fontcolor=white:fontsize={self.text_fontsize}:"
-                    f"x='w + n/({self.video_duration * self.fps}) * (-w-tw)':"
-                    f"y=-(line_h/2)+h/2"
-                ),
-                output_path
-            ]
-            
-            # Encode the command using UTF-8
-            encoded_cmd = [arg.encode('utf-8') if isinstance(arg, str) else arg for arg in cmd]
-            
-            try:
-                result = subprocess.run(encoded_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
-                print("Video generated successfully.")
-            except subprocess.CalledProcessError as e:
-                print(f"Error occurred: {e.stderr.decode('utf-8')}")
+        if output_path is None:
+            output_path = os.path.join(self.output_path, "out", "ffmpeg_output.mp4")
+        
+        cmd = [
+            'ffmpeg',
+            '-y',
+            '-i', os.path.join(self.output_path, 'data', 'background.mp4'),
+            '-r', str(self.fps),
+            '-vf', (
+                f"drawtext=fontfile='{os.path.join(self.output_path, 'data', 'arial.ttf')}':"
+                f"text='{self.text}':"
+                f"fontcolor=white:fontsize={self.text_fontsize}:"
+                f"x='w + n/({self.video_duration * self.fps}) * (-w-tw)':"
+                f"y=-(line_h/2)+h/2"
+            ),
+            output_path
+        ]
+        
+        # Перекодируем аргументы команды в UTF-8
+        encoded_cmd = [arg if isinstance(arg, bytes) else arg.encode('utf-8') for arg in cmd]
+        
+        try:
+            result = subprocess.run(encoded_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+            print("Видео успешно сгенерировано.")
+        except subprocess.CalledProcessError as e:
+            print(f"Произошла ошибка: {e.stderr.decode('utf-8')}")
 
     def generate_with_pygame(self, output_path=None):
         if output_path is None:
