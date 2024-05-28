@@ -29,10 +29,10 @@ class VideoGenerator:
 
     def get_output_path(self):
         try:
-            return str(settings.BASE_DIR) + "/out"
+            return str(settings.BASE_DIR)"
 
         except:
-            return os.path.join(os.getcwd(), "/out")
+            return os.getcwd()
 
 
     def check_imagemagick(self):
@@ -46,7 +46,7 @@ class VideoGenerator:
     def generate_with_moviepy(self, output_path=None):
         #change_settings({"IMAGEMAGICK_BINARY": self.pathMoviePy}) #местоположение ImageMagick
         if output_path is None:
-           output_path = self.output_path + "/moviepy_output.mp4"
+           output_path = self.output_path + "/out/moviepy_output.mp4"
 
         self.background_color = (255, 0, 255)  # magenta
         text_color = 'white'
@@ -79,7 +79,7 @@ class VideoGenerator:
 
     def generate_with_opencv(self, output_path = None):
         if output_path is None:
-            output_path = self.output_path + "/opencv_output.mp4"
+            output_path = self.output_path + "/out/opencv_output.mp4"
         text_color = (255, 255, 255)  # Цвет текста (BGR)
         text_fontscale = 2  # Размер шрифта текста
         text_thickness = 3  # Толщина текста
@@ -107,7 +107,7 @@ class VideoGenerator:
 
     def generate_with_ffmpeg(self, output_path=None):
         if output_path is None:
-            output_path = self.output_path + "/ffmpeg_output.mp4"
+            output_path = self.output_path + "/out/ffmpeg_output.mp4"
         cmd = (
             f'ffmpeg -y -i { self.output_path }/data/background.mp4 -r {self.fps} \
             -vf "drawtext=fontfile=\'{ self.output_path }/data/arial.ttf\':text=\'{self.text}\':\
@@ -119,7 +119,7 @@ class VideoGenerator:
 
     def generate_with_pygame(self, output_path=None):
         if output_path is None:
-            output_path = self.output_path + "/pygame_output.mp4"
+            output_path = self.output_path + "/out/pygame_output.mp4"
         background_color = (255, 0, 255)  # Цвет фона (RGB) magenta       
         text_color = (255, 255, 255)  # Цвет текста (RGB) white
 
