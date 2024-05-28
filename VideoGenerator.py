@@ -18,13 +18,22 @@ class VideoGenerator:
         self.text_fontsize = 69
         self.text = text  # Текст бегущей строки
         self.pathMoviePy = "C:\\Program Files\\ImageMagick-7.1.1-Q16\\magick.exe"
+        self.output_path = self.get_output_path()
 
-        if not os.path.exists(str(settings.BASE_DIR) + "/out"):
-            os.makedirs(str(settings.BASE_DIR) + "/out")
+        if not os.path.exists(self.output_path):
+            os.makedirs(self.output_path)
 
         # Проверка наличия программ
         self.check_imagemagick()
         self.check_ffmpeg()
+
+    def get_output_path(self):
+        try:
+            return str(settings.BASE_DIR) + "/out"
+
+        except (ImportError, AttributeError, django.core.exceptions.ImproperlyConfigured):
+            # Обработка случаев, когда настройки Django не доступны
+            return os.path.join(os.getcwd(), "/out")
 
 
     def check_imagemagick(self):
@@ -35,8 +44,10 @@ class VideoGenerator:
         if not shutil.which("ffmpeg"):
             raise EnvironmentError("FFmpeg is not installed or not found in the system PATH.")
 
-    def generate_with_moviepy(self, output_path=str(settings.BASE_DIR) + "/out/moviepy_output.mp4"):
+    def generate_with_moviepy(self, output_path=None):
         #change_settings({"IMAGEMAGICK_BINARY": self.pathMoviePy}) #местоположение ImageMagick
+        if output_path is None:
+           output_path = self.output_path + "/moviepy_output.mp4"
 
         self.background_color = (255, 0, 255)  # magenta
         text_color = 'white'
@@ -67,7 +78,9 @@ class VideoGenerator:
         # Сохраняем финальное видео
         final_clip.write_videofile(output_path, fps=25)
 
-    def generate_with_opencv(self, output_path=str(settings.BASE_DIR) + "/out/opencv_output.mp4"):
+    def generate_with_opencv(self, output_path = None):
+        if output_path is None:
+            output_path = self.output_path + "/opencv_output.mp4"
         text_color = (255, 255, 255)  # Цвет текста (BGR)
         text_fontscale = 2  # Размер шрифта текста
         text_thickness = 3  # Толщина текста
@@ -93,7 +106,9 @@ class VideoGenerator:
 
         out.release()
 
-    def generate_with_ffmpeg(self, output_path=str(settings.BASE_DIR) + "/out/ffmpeg_output.mp4"):
+    def generate_with_ffmpeg(self, output_path=None):
+        if output_path is None:
+            output_path = self.output_path + "/ffmpeg_output.mp4"
         cmd = (
             f'ffmpeg -y -i { str(settings.BASE_DIR) }/data/background.mp4 -r {self.fps} \
             -vf "drawtext=fontfile=\'{ str(settings.BASE_DIR) }/data/arial.ttf\':text=\'{self.text}\':\
@@ -103,7 +118,9 @@ class VideoGenerator:
         )
         os.system(cmd)
 
-    def generate_with_pygame(self, output_path=str(settings.BASE_DIR) + "/out/pygame_output.mp4"):
+    def generate_with_pygame(self, output_path=None):
+        if output_path is None:
+            output_path = self.output_path + "/pygame_output.mp4"
         background_color = (255, 0, 255)  # Цвет фона (RGB) magenta       
         text_color = (255, 255, 255)  # Цвет текста (RGB) white
 
