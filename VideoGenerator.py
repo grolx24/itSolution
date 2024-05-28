@@ -29,7 +29,7 @@ class VideoGenerator:
 
     def get_output_path(self):
         try:
-            return str(settings.BASE_DIR)"
+            return str(settings.BASE_DIR)
 
         except:
             return os.getcwd()
