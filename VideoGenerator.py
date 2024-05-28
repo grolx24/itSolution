@@ -21,7 +21,7 @@ class VideoGenerator:
         self.output_path = self.get_output_path()
 
         if not os.path.exists(self.output_path + "/out"):
-            os.makedirs(self.output_path + "\out")
+            os.makedirs(self.output_path + "/out")
 
         # Проверка наличия программ
         self.check_imagemagick()
