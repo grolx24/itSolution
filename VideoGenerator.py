@@ -109,8 +109,8 @@ class VideoGenerator:
         if output_path is None:
             output_path = self.output_path + "/ffmpeg_output.mp4"
         cmd = (
-            f'ffmpeg -y -i { str(settings.BASE_DIR) }/data/background.mp4 -r {self.fps} \
-            -vf "drawtext=fontfile=\'{ str(settings.BASE_DIR) }/data/arial.ttf\':text=\'{self.text}\':\
+            f'ffmpeg -y -i { self.output_path }/data/background.mp4 -r {self.fps} \
+            -vf "drawtext=fontfile=\'{ self.output_path }/data/arial.ttf\':text=\'{self.text}\':\
             fontcolor=white:fontsize={self.text_fontsize}:\
             x=\'w + n/({self.video_duration*self.fps}) * (-w-tw)\':\
             y=-(line_h/2)+h/2" {output_path}'
