@@ -25,7 +25,7 @@ class VideoGenerator:
         self.pathMoviePy = "C:\\Program Files\\ImageMagick-7.1.1-Q16\\magick.exe"
         self.output_path = self.get_output_path()
 
-        self.logfile = open(self.output_path + "/logfile", "a")
+        self.logfile = open(self.output_path + "/logfile", "a+")
 
         if os.path.exists(self.output_path + "/out"):
             shutil.rmtree(self.output_path + "/out")
