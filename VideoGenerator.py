@@ -11,6 +11,9 @@ import subprocess
 
 class VideoGenerator:
 
+    def __del__(self):
+        self.logfile.close()
+
     def __init__(self, text = "Хеллоу мир!"):
         self.video_duration = 3  # Продолжительность видео в секундах
         self.video_size = (100, 100)  # Размер видео (ширина, высота)
@@ -21,8 +24,11 @@ class VideoGenerator:
         self.pathMoviePy = "C:\\Program Files\\ImageMagick-7.1.1-Q16\\magick.exe"
         self.output_path = self.get_output_path()
 
-        if not os.path.exists(self.output_path + "/out"):
-            os.makedirs(self.output_path + "/out")
+        self.logfile = open(self.output_path + "/logfile", "a")
+
+        if os.path.exists(self.output_path + "/out"):
+            shutil.rmtree(self.output_path + "/out")
+        os.makedirs(self.output_path + "/out")
 
         # Проверка наличия программ
         self.check_imagemagick()
@@ -79,7 +85,7 @@ class VideoGenerator:
         try:
             final_clip.write_videofile(output_path, fps=25)
         except Exception as e:
-            print(e)
+            self.logfile.write(f"{ datetime.datetime.now() }: { e } \n")
 
     def generate_with_opencv(self, output_path = None):
         if output_path is None:
@@ -135,7 +141,7 @@ class VideoGenerator:
             result = subprocess.run(encoded_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
             print("Видео успешно сгенерировано.")
         except subprocess.CalledProcessError as e:
-            print(f"Произошла ошибка: {e.stderr.decode('utf-8')}")
+            self.logfile.write(f"{ datetime.datetime.now() }: { e } \n")
 
     def generate_with_pygame(self, output_path=None):
         if output_path is None:
@@ -175,9 +181,14 @@ class VideoGenerator:
 if __name__ == "__main__":
     try:
         VG = VideoGenerator()
+        VG.logfile.write(f"{ datetime.datetime.now() }: start movie\n")
         VG.generate_with_moviepy()
+        VG.logfile.write(f"{ datetime.datetime.now() }: start game\n")
         VG.generate_with_pygame()
+        VG.logfile.write(f"{ datetime.datetime.now() }: start ff\n")
         VG.generate_with_ffmpeg()
+        VG.logfile.write(f"{ datetime.datetime.now() }: start cv\n")
         VG.generate_with_opencv()
+        VG.logfile.close()
     except Exception as e:
-        print(str(e))
+        VG.logfile.write(f"{ datetime.datetime.now() }: { e } \n")

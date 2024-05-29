@@ -6,17 +6,31 @@ import os
 import zipfile
 from django.http import JsonResponse
 from django.conf import settings
+import datetime
 
 def index(request):
     text = request.GET.get('text', '')
     recent_requests = RequestLog.objects.exclude(text__exact="").order_by('-id')[:5]
 
+    log = open(str(settings.BASE_DIR) + "/logfile", "a")
+
     if text != '':
-        VG = VideoGenerator(text)
-        VG.generate_with_moviepy()
-        VG.generate_with_pygame()
-        VG.generate_with_ffmpeg()
-        VG.generate_with_opencv()
+        try:
+            log.write(f"{ datetime.datetime.now() } start\n")
+            VG = VideoGenerator(text)
+            log.write(f"{ datetime.datetime.now() } start movie\n")
+            VG.generate_with_moviepy()
+            log.write(f"{ datetime.datetime.now() } start game\n")
+            VG.generate_with_pygame()
+            log.write(f"{ datetime.datetime.now() } start ffmpeg\n")
+            VG.generate_with_ffmpeg()
+            log.write(f"{ datetime.datetime.now() } start cv\n")
+            VG.generate_with_opencv()
+        except Exception as e:
+            log.write(f"{ datetime.datetime.now() } { e }\n")
+        finally:
+            log.close()
+
 
         # После генерации видео перенаправляем на URL для скачивания файла
         return redirect('download_files')
