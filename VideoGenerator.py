@@ -78,8 +78,8 @@ class VideoGenerator:
         # Сохраняем финальное видео
         try:
             final_clip.write_videofile(output_path, fps=25)
-        except:
-            print(str(e))
+        except Exception as e:
+            print(e)
 
     def generate_with_opencv(self, output_path = None):
         if output_path is None:
