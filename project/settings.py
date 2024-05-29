@@ -25,7 +25,6 @@ load_dotenv("/home/itSolution/.env")
 # SECURITY WARNING: keep the secret key used in production secret!
 
 SECRET_KEY = os.getenv('SECRET_KEY')
-# SECRET_KEY = 'django-insecure-**$dqn62cqy3cskq0o6ir38nieq=6c6aj6k8ltirrs$c6y-r5x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -89,18 +88,6 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT'),
     }
 }
-
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.mysql',
-#        'NAME': 'itsolution',
-#        'USER': 'grolx',
-#        'PASSWORD': '22082008Artom!',
-#        'HOST': 'localhost',
-#        'PORT': '3306',
-#    }
-#}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
