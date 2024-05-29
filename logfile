@@ -284,3 +284,65 @@ hi
 2024-05-29 13:57:58.212507 start game
 2024-05-29 13:57:58.371067 start ffmpeg
 2024-05-29 13:57:58.501030 start cv
+2024-05-29 15:33:32.598667 start
+2024-05-29 15:33:32.599094 start movie
+2024-05-29 15:33:32.819305 start game
+2024-05-29 15:33:32.912538 start ffmpeg
+2024-05-29 15:33:33.279501 start cv
+2024-05-29 17:50:39.270762 start
+2024-05-29 17:50:39.271617 start movie
+2024-05-29 17:50:39.498632 start game
+2024-05-29 17:50:39.691271 start ffmpeg
+2024-05-29 17:50:40.110098 start cv
+2024-05-29 18:37:13.535535 start
+2024-05-29 18:37:13.536444 start movie
+2024-05-29 18:37:13.689906 start game
+2024-05-29 18:37:13.856141 start ffmpeg
+2024-05-29 18:37:14.246832 start cv
+2024-05-29 18:42:55.912573 start
+2024-05-29 18:42:55.913232 start movie
+2024-05-29 18:42:56.043072 start game
+2024-05-29 18:42:56.097529 start ffmpeg
+2024-05-29 18:42:56.255777 start cv
+2024-05-29 18:48:38.327672 start
+2024-05-29 18:48:38.328352 start movie
+2024-05-29 18:48:38.457527 start game
+2024-05-29 18:48:38.647377 start ffmpeg
+2024-05-29 18:48:38.815972 start cv
+2024-05-29 18:49:40.822526 start
+2024-05-29 18:49:40.823189 start movie
+2024-05-29 18:49:41.060631 start game
+2024-05-29 18:49:41.212604 start ffmpeg
+2024-05-29 18:49:41.368372 start cv
+2024-05-29 18:56:43.940067 start
+2024-05-29 18:56:43.940756 start movie
+2024-05-29 18:56:44.083208 start game
+2024-05-29 18:56:44.137919 start ffmpeg
+2024-05-29 18:56:44.288549 start cv
+2024-05-29 18:56:45.294688 start
+2024-05-29 18:56:45.295481 start movie
+2024-05-29 18:56:45.407023 start game
+2024-05-29 18:56:45.552548 start ffmpeg
+2024-05-29 18:56:45.700792 start cv
+2024-05-29 18:56:46.556046 start
+2024-05-29 18:56:46.556647 start movie
+2024-05-29 18:56:46.682899 start game
+2024-05-29 18:56:46.837710 start ffmpeg
+2024-05-29 18:56:46.995310 start cv
+2024-05-29 18:56:47.998821 start
+2024-05-29 18:56:47.999487 start movie
+2024-05-29 18:56:48.116470 start game
+2024-05-29 18:56:48.265526 start ffmpeg
+2024-05-29 18:56:48.463797 start cv
+2024-05-29 18:56:48.948068 start
+2024-05-29 18:56:48.948712 start movie
+2024-05-29 18:56:49.069207 start game
+2024-05-29 18:56:49.113334 start ffmpeg
+2024-05-29 18:56:49.269450 start cv
+2024-05-29 19:00:54.541578: Command '[b'ffmpeg', b'-y', b'-i', b'/home/itSolution/data/background.mp4', b'-r', b'25', b'-vf', b"drawtext=fontfile='/home/itSolution/data/arial.ttf':text='\xd1\x82\xd0\xb5\xd1\x81\xd1\x82 TEST':fontcolor=white:fontsize=69:x='w + n/(75) * (-w-tw)':y=-(line_h/2)+h/2", b'/out/ffmpeg_output.mp4']' returned non-zero exit status 1. 
+2024-05-29 19:00:54.606536: [Errno 32] Broken pipe
+
+MoviePy error: FFMPEG encountered the following error while writing file /out/moviepy_output.mp4:
+
+ b'/out/moviepy_output.mp4: No such file or directory\n' 
+2024-05-29 19:04:55.914246: Command '[b'ffmpeg', b'-y', b'-i', b'/home/itSolution/data/background.mp4', b'-r', b'25', b'-vf', b"drawtext=fontfile='/home/itSolution/data/arial.ttf':text='\xd1\x82\xd0\xb5\xd1\x81\xd1\x82 TEST':fontcolor=white:fontsize=69:x='w + n/(75) * (-w-tw)':y=-(line_h/2)+h/2", b'/out/ffmpeg_output.mp4']' returned non-zero exit status 1. 
